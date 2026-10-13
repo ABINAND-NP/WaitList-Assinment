@@ -12,7 +12,9 @@ const App = () => {
     <div className="font-geist">
       <Routes>
         <Route path="/" element={<AdminLayOut />}>
-          <Route index element={<Orders />} />
+          {/* WaitList is now the default page at "/" */}
+          <Route index element={<WaitList />} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/calinder" element={<Calinder />} />
           <Route path="/subcerption" element={<Subcerption />} />
           <Route path="/waitlist" element={<WaitList />} />

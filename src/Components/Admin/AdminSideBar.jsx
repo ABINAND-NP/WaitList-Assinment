@@ -20,8 +20,9 @@ const AdminSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const manueItems = [
+    
     {
-      path: "/",
+      path: "/orders",
       name: "Orders",
       icon: <img src={icon2} alt="Orders" className="h-4 w-4" />,
     },
@@ -36,7 +37,7 @@ const AdminSideBar = () => {
       icon: <img src={icon4} alt="Calinder" className="h-4 w-4" />,
     },
     {
-      path: "/waitlist",
+      path: "/",
       name: "WaitList",
       icon: <img src={icon5} alt="WaitList" className="h-4 w-4" />,
     },
