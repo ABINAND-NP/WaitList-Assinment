@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-import { 
-  Calendar, 
-  Users, 
-  Package, 
-  ChevronDown, 
-  ChevronUp, 
-  Check, 
-  CalendarDays 
+import {
+  Calendar,
+  Users,
+  Package,
+  ChevronDown,
+  ChevronUp,
+  Check,
+  CalendarDays,
 } from "lucide-react";
 import People from "./People";
 import ServiceProduct from "./ServiceProduct";
+import icon16 from "../../../assets/sideBarIcon/icon16.svg";
 
-const FilterModal = ({
-  isOpen,
-  onClose,
-  onApply,
-  onReset,
-}) => {
+const FilterModal = ({ isOpen, onClose, onApply, onReset }) => {
   const [activeTab, setActiveTab] = useState("Scheduled Date");
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -31,7 +27,7 @@ const FilterModal = ({
     "All",
     "Custom",
     "Last 30 days",
-    "This month", 
+    "This month",
     "Last month",
     "This quarter",
     "2 quarter ago",
@@ -69,7 +65,9 @@ const FilterModal = ({
         from = formatDate(new Date(today.getFullYear(), today.getMonth(), 1));
         break;
       case "Last month":
-        from = formatDate(new Date(today.getFullYear(), today.getMonth() - 1, 1));
+        from = formatDate(
+          new Date(today.getFullYear(), today.getMonth() - 1, 1),
+        );
         to = formatDate(new Date(today.getFullYear(), today.getMonth(), 0));
         break;
       case "This quarter": {
@@ -106,7 +104,13 @@ const FilterModal = ({
   };
 
   const handleApply = () => {
-    onApply({ preset, from: fromDate, to: toDate, selectedPeople, selectedServices });
+    onApply({
+      preset,
+      from: fromDate,
+      to: toDate,
+      selectedPeople,
+      selectedServices,
+    });
   };
 
   const handleReset = () => {
@@ -124,12 +128,20 @@ const FilterModal = ({
 
   const tabs = [
     { name: "Scheduled Date", icon: Calendar, count: 1 },
-    { name: "People", icon: Users, count: selectedPeople.length > 0 ? selectedPeople.length : null },
-    { name: "Services / Products", icon: Package, count: selectedServices.length > 0 ? selectedServices.length : null },
+    {
+      name: "People",
+      icon: Users,
+      count: selectedPeople.length > 0 ? selectedPeople.length : null,
+    },
+    {
+      name: "Services / Products",
+      icon: Package,
+      count: selectedServices.length > 0 ? selectedServices.length : null,
+    },
   ];
 
   return (
-    <div 
+    <div
       className="absolute left-0 top-full mt-2 z-50 w-[540px] rounded-lg border border-gray-200 bg-white shadow-xl"
       onClick={(e) => e.stopPropagation()}
     >
@@ -151,7 +163,9 @@ const FilterModal = ({
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <Icon className={`h-4 w-4 ${isActive ? "text-gray-900" : "text-gray-500"}`} />
+                  <Icon
+                    className={`h-4 w-4 ${isActive ? "text-gray-900" : "text-gray-500"}`}
+                  />
                   <span>{tab.name}</span>
                 </div>
                 {tab.count && (
@@ -181,7 +195,11 @@ const FilterModal = ({
                     className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs text-gray-800 shadow-sm hover:bg-gray-50"
                   >
                     <span className="font-medium">{preset}</span>
-                    {showDropdown ? <ChevronUp className="h-4 w-4 text-gray-500" /> : <ChevronDown className="h-4 w-4 text-gray-500" />}
+                    {showDropdown ? (
+                      <ChevronUp className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-gray-500" />
+                    )}
                   </button>
 
                   {showDropdown && (
@@ -194,7 +212,8 @@ const FilterModal = ({
                           className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs text-gray-700 hover:bg-gray-50"
                         >
                           <span>{option}</span>
-                          {(option === preset || (option === "All" && preset === "All time")) && (
+                          {(option === preset ||
+                            (option === "All" && preset === "All time")) && (
                             <Check className="h-3.5 w-3.5 text-gray-900" />
                           )}
                         </button>
@@ -210,9 +229,14 @@ const FilterModal = ({
                       From
                     </label>
                     <div className="relative flex items-center">
-                      <CalendarDays className="absolute left-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                      <img src={icon16} alt="ic" className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 pointer-events-none" />
                       <input
-                        type="date"
+                        type={fromDate ? "date" : "text"}
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => {
+                          if (!e.target.value) e.target.type = "text";
+                        }}
+                        placeholder="Pick a date"
                         value={fromDate}
                         max={toDate || undefined}
                         onChange={(e) => {
@@ -229,13 +253,18 @@ const FilterModal = ({
                       To
                     </label>
                     <div className="relative flex items-center">
-                      <CalendarDays className="absolute left-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                      <img src={icon16} alt="ic"className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 pointer-events-none" />
                       <input
-                        type="date"
-                        value={toDate}
-                        min={fromDate || undefined}
+                        type={fromDate ? "date" : "text"}
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => {
+                          if (!e.target.value) e.target.type = "text";
+                        }}
+                        placeholder="Pick a date"
+                        value={fromDate}
+                        max={toDate || undefined}
                         onChange={(e) => {
-                          setToDate(e.target.value);
+                          setFromDate(e.target.value);
                           setPreset("Custom");
                         }}
                         className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-8 pr-2 text-xs text-gray-800 shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-900"
@@ -248,15 +277,15 @@ const FilterModal = ({
 
             {activeTab === "People" && (
               <People
-                selectedPeople={selectedPeople} 
-                setSelectedPeople={setSelectedPeople} 
+                selectedPeople={selectedPeople}
+                setSelectedPeople={setSelectedPeople}
               />
             )}
 
             {activeTab === "Services / Products" && (
-              <ServiceProduct 
-                selectedServices={selectedServices} 
-                setSelectedServices={setSelectedServices} 
+              <ServiceProduct
+                selectedServices={selectedServices}
+                setSelectedServices={setSelectedServices}
               />
             )}
           </div>
