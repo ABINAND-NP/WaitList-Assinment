@@ -12,30 +12,33 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
   const [selectedServiceType, setSelectedServiceType] = useState("Select Service Type");
   const [selectedStatus, setSelectedStatus] = useState("Select Status");
 
-  // Extract unique session types for the first dropdown (no duplicates)
+  const dataList = Array.isArray(DS) ? DS : [];
+
+  // Extract unique session types safely
   const uniqueSessionTypes = useMemo(() => {
     const types = new Set();
-    DS.forEach((item) => {
-      if (item.session_type) types.add(item.session_type);
+    dataList.forEach((item) => {
+      const serviceType = item.session_type || item.services || item.service;
+      if (serviceType) types.add(serviceType);
     });
     return Array.from(types);
-  }, []);
+  }, [dataList]);
 
-  // Extract unique statuses for the second dropdown
+  // Extract unique statuses safely
   const uniqueStatuses = useMemo(() => {
     const statuses = new Set();
-    DS.forEach((item) => {
+    dataList.forEach((item) => {
       if (item.status) statuses.add(item.status);
     });
     return Array.from(statuses);
-  }, []);
+  }, [dataList]);
 
   // Extract unique services/products for "Search by Name"
   const allServices = useMemo(() => {
     const uniqueMap = new Map();
-    DS.forEach((item) => {
-      const itemName = item.name || item.service || "Standard Session";
-      const itemTag = item.session_type || "General";
+    dataList.forEach((item) => {
+      const itemName = item.services || item.name || item.service || "Standard Session";
+      const itemTag = item.session_type || item.services || "General";
       const itemStatus = item.status || "Active";
       
       if (!uniqueMap.has(itemName)) {
@@ -48,7 +51,7 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
       }
     });
     return Array.from(uniqueMap.values());
-  }, []);
+  }, [dataList]);
 
   // Filter based on "Search by Name"
   const filteredServices = useMemo(() => {
@@ -60,7 +63,6 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
     );
 
     const sorted = matches.sort((a, b) => a.name.localeCompare(b.name));
-
     const selectedSet = new Set(selectedServices.map((s) => s.id));
     const pinned = sorted.filter((s) => selectedSet.has(s.id));
     const unpinned = sorted.filter((s) => !selectedSet.has(s.id));
@@ -73,6 +75,16 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
       setSelectedServices(selectedServices.filter((s) => s.id !== service.id));
     } else {
       setSelectedServices([...selectedServices, service]);
+    }
+  };
+
+  const handleSelectServiceType = (type) => {
+    setSelectedServiceType(type);
+    setShowServiceTypeDropdown(false);
+    // Add to selectedServices filter payload
+    const matchingService = allServices.find((s) => s.tag === type || s.name === type);
+    if (matchingService && !selectedServices.some((s) => s.id === matchingService.id)) {
+      setSelectedServices([...selectedServices, matchingService]);
     }
   };
 
@@ -162,11 +174,11 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
                     <div className="flex items-center gap-2.5">
                       <div
                         className={`h-4 w-4 rounded border flex items-center justify-center transition-colors ${
-                          isChecked
-                            ? "bg-black border-black"
-                            : "bg-white border-gray-300"
+                          isChecked ? "bg-black border-black text-white" : "bg-white border-gray-300"
                         }`}
-                      />
+                      >
+                        {isChecked && <Check className="h-3 w-3" />}
+                      </div>
                       <span className="font-medium text-gray-800">{service.name}</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -205,21 +217,22 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
               </button>
 
               {showServiceTypeDropdown && (
-                <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-[210px] overflow-y-auto rounded-lg border border-gray-200 bg-white p-1 shadow-lg">
-                  {uniqueSessionTypes.map((type) => (
-                    <button
-                      key={type}
-                      type="button"
-                      onClick={() => {
-                        setSelectedServiceType(type);
-                        setShowServiceTypeDropdown(false);
-                      }}
-                      className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs text-gray-700 hover:bg-gray-50"
-                    >
-                      <span>{type}</span>
-                      {selectedServiceType === type && <Check className="h-3.5 w-3.5 text-black" />}
-                    </button>
-                  ))}
+                <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-[210px] overflow-y-auto rounded-lg border border-gray-200 bg-white p-1 shadow-lg [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full">
+                  {uniqueSessionTypes.length > 0 ? (
+                    uniqueSessionTypes.map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => handleSelectServiceType(type)}
+                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs text-gray-700 hover:bg-gray-50"
+                      >
+                        <span>{type}</span>
+                        {selectedServiceType === type && <Check className="h-3.5 w-3.5 text-black" />}
+                      </button>
+                    ))
+                  ) : (
+                    <p className="text-xs text-gray-400 text-center py-2">No service types found</p>
+                  )}
                 </div>
               )}
             </div>
@@ -244,21 +257,25 @@ const ServiceProduct = ({ selectedServices, setSelectedServices }) => {
               </button>
 
               {showStatusDropdown && (
-                <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-[210px] overflow-y-auto rounded-lg border border-gray-200 bg-white p-1 shadow-lg">
-                  {uniqueStatuses.map((status) => (
-                    <button
-                      key={status}
-                      type="button"
-                      onClick={() => {
-                        setSelectedStatus(status);
-                        setShowStatusDropdown(false);
-                      }}
-                      className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs text-gray-700 hover:bg-gray-50"
-                    >
-                      <span>{status}</span>
-                      {selectedStatus === status && <Check className="h-3.5 w-3.5 text-black" />}
-                    </button>
-                  ))}
+                <div className="absolute left-0 right-0 top-full z-20 mt-1 max-h-[210px] overflow-y-auto rounded-lg border border-gray-200 bg-white p-1 shadow-lg [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full">
+                  {uniqueStatuses.length > 0 ? (
+                    uniqueStatuses.map((status) => (
+                      <button
+                        key={status}
+                        type="button"
+                        onClick={() => {
+                          setSelectedStatus(status);
+                          setShowStatusDropdown(false);
+                        }}
+                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-xs text-gray-700 hover:bg-gray-50"
+                      >
+                        <span>{status}</span>
+                        {selectedStatus === status && <Check className="h-3.5 w-3.5 text-black" />}
+                      </button>
+                    ))
+                  ) : (
+                    <p className="text-xs text-gray-400 text-center py-2">No statuses found</p>
+                  )}
                 </div>
               )}
             </div>

@@ -5,14 +5,15 @@ import DS from "../../Data/DS";
 const People = ({ selectedPeople, setSelectedPeople }) => {
   const [peopleSearch, setPeopleSearch] = useState("");
 
-  // Extract unique people and their tags from DS
+  // Extract unique people and their tags from DS using 'payer'
   const allPeople = useMemo(() => {
     const uniqueMap = new Map();
     DS.forEach((item) => {
-      if (item.name && !uniqueMap.has(item.name)) {
-        uniqueMap.set(item.name, {
-          id: item.name,
-          name: item.name,
+      const personName = item.payer || item.name;
+      if (personName && !uniqueMap.has(personName)) {
+        uniqueMap.set(personName, {
+          id: personName,
+          name: personName,
           tag: item.status || "Client",
         });
       }
