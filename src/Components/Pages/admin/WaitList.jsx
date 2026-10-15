@@ -8,6 +8,9 @@ import icon12 from "../../../assets/sideBarIcon/icon12.svg";
 import icon13 from "../../../assets/sideBarIcon/icon13.svg";
 import icon14 from "../../../assets/sideBarIcon/icon14.svg";
 import icon17 from "../../../assets/sideBarIcon/icon17.svg";
+import icon18 from "../../../assets/sideBarIcon/icon18.svg";
+import icon19 from "../../../assets/sideBarIcon/icon19.svg";
+import icon20 from "../../../assets/sideBarIcon/icon20.svg";
 
 const WaitList = () => {
   const [datas, setData] = useState([]);
@@ -216,7 +219,7 @@ const WaitList = () => {
                   setSearch(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="rounded-md  border-[#94A3B8] font-medium placeholder:font-medium placeholder:text-[12px] py-0.5 pl-9 pr-3 shadow outline-none"
+                className="rounded-md border-[#94A3B8] font-medium placeholder:font-medium placeholder:text-[12px] py-0.5 pl-9 pr-3 shadow outline-none"
               />
             </div>
 
@@ -359,12 +362,13 @@ const WaitList = () => {
 
       <div className="px-4">
         <div className="overflow-x-auto py-1">
-          <div className="max-h-[420px] overflow-y-auto overflow-x-auto rounded-sm border border-[#E2E8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#E2E8F0]">
+          {/* Adjusted max-h to display ~7 items at a time */}
+          <div className="max-h-[350px] overflow-y-auto overflow-x-auto rounded-sm border border-[#E2E8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#E2E8F0]">
             
             <table className="w-full border-collapse text-left font-medium ">
               <thead className="sticky top-0 z-10 border-b border-gray-300 font-medium text-gray-600 text-xs ">
                 <tr>
-                  <th className="w-10 px-2 py-3 pl-5  bg-[#F8FAFC]">
+                  <th className="w-10 px-2 py-3 pl-5 bg-[#F8FAFC]">
                     <input
                       type="checkbox"
                       style={{ accentColor: "#18181B" }}
@@ -372,7 +376,7 @@ const WaitList = () => {
                     />
                   </th>
                   {columns.createdOn && (
-                    <th className="px-2 py-3 bg-[#F8FAFC] text-[#64748B]font-medium font-medium pl-5 ">Created On</th>
+                    <th className="px-2 py-3 bg-[#F8FAFC] text-[#64748B] font-medium pl-5">Created On</th>
                   )}
                   {columns.payer && (
                     <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Payer</th>
@@ -390,11 +394,11 @@ const WaitList = () => {
                     <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Services</th>
                   )}
                   {columns.scheduled && (
-                    <th className=" bg-[#F8FAFC] text-[#64748B] font-medium pl-5">Scheduled</th>
+                    <th className="bg-[#F8FAFC] text-[#64748B] font-medium pl-5">Scheduled</th>
                   )}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] bg-white  ">
+              <tbody className="divide-y divide-[#E2E8F0] bg-white">
                 {currentDatas.length > 0 ? (
                   currentDatas.map((item) => (
                     <tr
@@ -405,16 +409,16 @@ const WaitList = () => {
                         <input
                           type="checkbox"
                           style={{ accentColor: "#18181B" }}
-                          className="h-4 w-4 cursor-pointe rounded-full"
+                          className="h-4 w-4 cursor-pointer rounded-full"
                         />
                       </td>
                       {columns.createdOn && (
-                        <td className="whitespace-nowrap px-2 py-3  pl-5  text-[#374151]">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5 text-[#374151]">
                           {item.created_at}
                         </td>
                       )} 
                       {columns.payer && (
-                        <td className="whitespace-nowrap px-2 py-3 pl-5  font-medium text-[#374151]">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5 font-medium text-[#374151]">
                           {item.payer}
                         </td>
                       )}
@@ -477,51 +481,51 @@ const WaitList = () => {
               </tbody>
             </table>
           </div>
-           {/* Pagination Controls */}
-        <div className="flex items-center justify-between px-3 py-4 text-sm text-gray-600">
-          <div>
-            Displaying {totalItems === 0 ? 0 : indexOfFirstItem + 1} -{" "}
-            {Math.min(indexOfLastItem, totalItems)} out of {totalItems}
-          </div>
 
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className="rounded-md border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Previous
-            </button>
+          {/* Pagination Controls */}
+          <div className="flex items-center justify-between px-3 py-4 text-sm text-gray-600">
+            <div className="flex gap-1">
+              Displaying {" "} <button className="flex bg-[#F8FAFC] text-[#334155] px-2 py-1 rounded-sm ">{Math.min(indexOfLastItem, totalItems)} <img src={icon18} alt="ic" className="h-16px w-16px" /> </button>  out of <label className="text-[#18181B]">{totalItems}</label>
+            </div>
 
-            {getPageNumbers().map((page) => (
+            <div className="flex items-center gap-1">
               <button
                 type="button"
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`rounded-md border px-3 py-1 ${
-                  currentPage === page
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-300 hover:bg-gray-100"
-                }`}
+                onClick={handlePrev}
+                disabled={currentPage === 1}
+                className="flex rounded-md border border-[#FFFFFF] px-3 py-1 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {page}
+                <img src={icon19} alt="ic" />
+                <label className="pl-2"> Previous</label>
               </button>
-            ))}
 
-            <button
-              type="button"
-              onClick={handleNext}
-              disabled={currentPage === totalPages || totalPages === 0}
-              className="rounded-md border border-gray-300 px-3 py-1 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Next
-            </button>
+              {getPageNumbers().map((page) => (
+                <button
+                  type="button"
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`rounded-md border px-3 py-1 ${
+                    currentPage === page
+                      ? "border-[#FFFFFF00] bg-[#FFFFFF00] text-white"
+                      : "border-[#FFFFFF00] hover:border-[#E2E8F0]"
+                  }`}
+                >
+                  <label className="text-[#334155]"> {page}</label>
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={handleNext}
+                disabled={currentPage === totalPages || totalPages === 0}
+                className="flex rounded-md border border-[#FFFFFF] px-3 py-1 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+              >                
+                <label className="pr-2" >Next</label>
+                <img src={icon20} alt="ic"  />
+              </button>
+            </div>
           </div>
         </div>
-        </div>
-
-       
       </div>
     </>
   );

@@ -15,6 +15,7 @@ import icon7 from '../../assets/sideBarIcon/icon7.svg';
 import icon8 from '../../assets/sideBarIcon/icon8.svg';
 import icon9 from '../../assets/sideBarIcon/icon9.svg';
 import icon15 from "../../assets/sideBarIcon/icon15.svg";
+import icon21 from "../../assets/sideBarIcon/icon21.svg";
 
 const AdminSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -152,14 +153,17 @@ const AdminSideBar = () => {
           )}
         </div>
 
-        <div className={`flex items-center ${collapsed ? "justify-center" : "gap-3 px-1"}`}>
+        <div className={`bg-[#FFFFFF] px-[8px] py-[10px] justify-between shadow-md rounded-sm flex items-center ${collapsed ? "justify-center" : "gap-3 px-1"}`}>
+          <div>
           <img src={icon8} alt="Admin" className="h-8 w-8 rounded-full flex-shrink-0" />
           {!collapsed && (
             <div className="flex flex-col min-w-0">
               <span className="text-xs font-semibold text-gray-800 truncate">Admin name</span>
               <span className="text-[10px] text-gray-500 truncate">adminname@gmail.com</span>
-            </div>
+            </div>           
           )}
+          </div>
+           <img src={icon21} alt="ic" className="" />
         </div>
 
         <div className={`flex items-center ${collapsed ? "justify-center" : "gap-3 px-1"}`}>
