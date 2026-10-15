@@ -154,7 +154,7 @@ const AdminSideBar = () => {
         </div>
 
         <div className={`bg-[#FFFFFF] px-[8px] py-[10px] justify-between shadow-md rounded-sm flex items-center ${collapsed ? "justify-center" : "gap-3 px-1"}`}>
-          <div>
+          <div className="flex items-center gap-3">
           <img src={icon8} alt="Admin" className="h-8 w-8 rounded-full flex-shrink-0" />
           {!collapsed && (
             <div className="flex flex-col min-w-0">
