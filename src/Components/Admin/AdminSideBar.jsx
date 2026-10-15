@@ -62,7 +62,7 @@ const AdminSideBar = () => {
             <button
               type="button"
               onClick={() => collapsed && setCollapsed(false)}
-              className="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0"
+              className="rounded-lg flex items-center justify-center flex-shrink-0"
             >
               <img
                 src={Logo}

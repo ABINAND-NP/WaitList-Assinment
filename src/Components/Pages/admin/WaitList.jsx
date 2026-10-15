@@ -7,6 +7,7 @@ import icon10 from "../../../assets/sideBarIcon/icon10.svg";
 import icon12 from "../../../assets/sideBarIcon/icon12.svg";
 import icon13 from "../../../assets/sideBarIcon/icon13.svg";
 import icon14 from "../../../assets/sideBarIcon/icon14.svg";
+import icon17 from "../../../assets/sideBarIcon/icon17.svg";
 
 const WaitList = () => {
   const [datas, setData] = useState([]);
@@ -76,14 +77,17 @@ const WaitList = () => {
     const searchValue = search.trim().toLowerCase();
 
     const matchesSearch = Object.values(item).some((value) =>
-      String(value ?? "").toLowerCase().includes(searchValue)
+      String(value ?? "")
+        .toLowerCase()
+        .includes(searchValue),
     );
 
     if (!matchesSearch) return false;
 
     if (appliedFilter.selectedPeople?.length > 0) {
       const matchPerson = appliedFilter.selectedPeople.some(
-        (p) => (p.name || "").toLowerCase() === (item.payer || "").toLowerCase()
+        (p) =>
+          (p.name || "").toLowerCase() === (item.payer || "").toLowerCase(),
       );
       if (!matchPerson) return false;
     }
@@ -91,8 +95,12 @@ const WaitList = () => {
     if (appliedFilter.selectedServices?.length > 0) {
       const matchService = appliedFilter.selectedServices.some(
         (s) =>
-          (item.services || "").toLowerCase().includes((s.name || "").toLowerCase()) ||
-          (item.services || "").toLowerCase().includes((s.tag || "").toLowerCase())
+          (item.services || "")
+            .toLowerCase()
+            .includes((s.name || "").toLowerCase()) ||
+          (item.services || "")
+            .toLowerCase()
+            .includes((s.tag || "").toLowerCase()),
       );
       if (!matchService) return false;
     }
@@ -132,8 +140,10 @@ const WaitList = () => {
   };
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
-  const handlePrev = () => currentPage > 1 && setCurrentPage((prev) => prev - 1);
-  const handleNext = () => currentPage < totalPages && setCurrentPage((prev) => prev + 1);
+  const handlePrev = () =>
+    currentPage > 1 && setCurrentPage((prev) => prev - 1);
+  const handleNext = () =>
+    currentPage < totalPages && setCurrentPage((prev) => prev + 1);
 
   const handleApplyFilter = (filter) => {
     setAppliedFilter(filter);
@@ -161,26 +171,30 @@ const WaitList = () => {
 
   return (
     <>
-      <div className="px-5 py-3">
-        <strong className="text-gray-700 font-semibold">WaitList</strong>
+      <div className="px-4 py-1">
+        <strong className="text-[#334155] text-[20px] font-semibold leading-[28px]">
+          WaitList
+        </strong>
       </div>
 
-      <div className="py-1">
-        <div className="flex gap-2 px-5 py-5">
+      <div>
+        <div className="flex gap-3 px-4 py-3 ">
           <StatusCard title="All Waitlists" value={totalItems} />
           <StatusCard title="Newly Add" value="50" />
           <StatusCard title="Leads" value="20" />
         </div>
 
-        <div className="flex items-center justify-between px-5">
+        <div className="flex items-center justify-between px-4">
           <div className="relative">
             <button
               type="button"
               onClick={() => setShowFilterModal((prev) => !prev)}
-              className="flex items-center gap-1 rounded-sm bg-gray-200 px-2 py-1 hover:bg-gray-300"
+              className="flex items-center gap-2 rounded-sm bg-[#F1F5F9] px-3 py-2"
             >
               <img src={icon10} alt="ic" className="h-4 w-4" />
-              <span>Add Filter</span>
+              <span className="font-medium text-[#334155] text-[12px]">
+                Add Filter
+              </span>
             </button>
             <FilterModal
               isOpen={showFilterModal}
@@ -191,9 +205,9 @@ const WaitList = () => {
             />
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="relative px-2">
-              <CiSearch size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+          <div className="flex items-center gap-1">
+            <div className="relative px-2 py-2">
+              <img src={icon17} alt="ic" className="absolute left-5 top-1/2 h-12px w-12px -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search Client"
@@ -202,11 +216,16 @@ const WaitList = () => {
                   setSearch(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="rounded-md border border-gray-300 py-1 pl-10 pr-3 shadow outline-none focus:border-blue-500"
+                className="rounded-md  border-[#94A3B8] font-medium placeholder:font-medium placeholder:text-[12px] py-0.5 pl-9 pr-3 shadow outline-none"
               />
             </div>
 
-            <button type="button" onClick={handleRefresh} title="Clear search" className="px-2 py-1 hover:text-blue-600">
+            <button
+              type="button"
+              onClick={handleRefresh}
+              title="Clear search"
+              className="px-1 py-1 hover:text-blue-600"
+            >
               <img src={icon12} alt="ic" className="h-16px w-16px" />
             </button>
 
@@ -225,14 +244,18 @@ const WaitList = () => {
 
               {showColumnModal && (
                 <div className="absolute right-0 top-full mt-2 w-80 rounded-lg bg-white p-4 shadow-xl border border-gray-200 z-50">
-                  <h3 className="text-base font-semibold text-gray-900">Edit Columns</h3>
-                  <p className="mt-1 text-xs text-gray-500">Select the columns to display</p>
+                  <h3 className="text-base font-semibold text-gray-900">
+                    Edit Columns
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-500">
+                    Select the columns to display
+                  </p>
 
                   <div className="mt-4 max-h-[260px] overflow-y-auto space-y-2.5 pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300">
                     {[
                       { key: "createdOn", label: "Order Created On" },
                       { key: "payer", label: "Payer" },
-                      { key: "status", label: "Status" }, 
+                      { key: "status", label: "Status" },
                       { key: "email", label: "Email" },
                       { key: "payerPhone", label: "Payer Phone" },
                       { key: "service", label: "Service" },
@@ -241,22 +264,46 @@ const WaitList = () => {
                       <div key={col.key} className="flex items-center gap-3">
                         <button
                           type="button"
-                          onClick={() => setTempColumns({ ...tempColumns, [col.key]: !tempColumns[col.key] })}
+                          onClick={() =>
+                            setTempColumns({
+                              ...tempColumns,
+                              [col.key]: !tempColumns[col.key],
+                            })
+                          }
                           className={`h-4 w-4 rounded flex items-center justify-center transition-colors cursor-pointer shadow-sm flex-shrink-0 ${
-                            tempColumns[col.key] ? "bg-[#18181B] text-white" : "bg-white border border-gray-300 hover:border-gray-400"
+                            tempColumns[col.key]
+                              ? "bg-[#18181B] text-white"
+                              : "bg-white border border-gray-300 hover:border-gray-400"
                           }`}
                         >
                           {tempColumns[col.key] && (
-                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            <svg
+                              className="h-3 w-3"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={3}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M5 13l4 4L19 7"
+                              />
                             </svg>
                           )}
                         </button>
                         <div
-                          onClick={() => setTempColumns({ ...tempColumns, [col.key]: !tempColumns[col.key] })}
+                          onClick={() =>
+                            setTempColumns({
+                              ...tempColumns,
+                              [col.key]: !tempColumns[col.key],
+                            })
+                          }
                           className="flex-1 rounded-lg border border-gray-200 px-3 py-2.5 bg-white cursor-pointer hover:bg-gray-50 transition-colors"
                         >
-                          <span className="text-xs font-medium text-gray-700">{col.label}</span>
+                          <span className="text-xs font-medium text-gray-700">
+                            {col.label}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -266,7 +313,15 @@ const WaitList = () => {
                     <button
                       type="button"
                       onClick={() => {
-                        const defaultCols = { createdOn: true, payer: true, status: true, email: true, payerPhone: true, service: true, scheduled: true };
+                        const defaultCols = {
+                          createdOn: true,
+                          payer: true,
+                          status: true,
+                          email: true,
+                          payerPhone: true,
+                          service: true,
+                          scheduled: true,
+                        };
                         setTempColumns(defaultCols);
                         setColumns(defaultCols);
                         setShowColumnModal(false);
@@ -291,39 +346,78 @@ const WaitList = () => {
               )}
             </div>
 
-            <button type="button" title="Download" className="px-1 hover:text-blue-600 flex items-center">
+            <button
+              type="button"
+              title="Download"
+              className="px-1 hover:text-blue-600 flex items-center"
+            >
               <img src={icon14} alt="ic" className="h-16px w-16px" />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="px-5">
-        <div className="overflow-x-auto px-3 py-1">
-<div className="max-h-[420px] overflow-y-auto overflow-x-auto rounded-sm border border-gray-300 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300">            <table className="w-full border-collapse text-left text-sm text-gray-700">
-              <thead className="sticky top-0 z-10 border-b border-gray-300 bg-gray-100 font-medium text-gray-600 text-xs">
+      <div className="px-4">
+        <div className="overflow-x-auto py-1">
+          <div className="max-h-[420px] overflow-y-auto overflow-x-auto rounded-sm border border-[#E2E8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#E2E8F0]">
+            {" "}
+            <table className="w-full border-collapse text-left text-sm text-gray-700">
+              <thead className="sticky top-0 z-10 border-b border-gray-300 bg-gray-900 font-medium text-gray-600 text-xs">
                 <tr>
-                  <th className="w-10 px-2 py-2 bg-gray-100">
-                    <input type="checkbox" style={{ accentColor: "#18181B" }} className="h-4 w-4 cursor-pointer" />
+                  <th className="w-10 px-2 py-2 bg-[#EBEEF0]">
+                    <input
+                      type="checkbox"
+                      style={{ accentColor: "#18181B" }}
+                      className="h-4 w-4 cursor-pointer"
+                    />
                   </th>
-                  {columns.createdOn && <th className="px-2 py-2 bg-gray-100">Created On</th>}
-                  {columns.payer && <th className="px-2 py-2 bg-gray-100">Payer</th>}
-                  {columns.status && <th className="px-2 py-2 bg-gray-100">Status</th>}
-                  {columns.email && <th className="px-2 py-2 bg-gray-100">Email</th>}
-                  {columns.payerPhone && <th className="px-2 py-2 bg-gray-100">Payer Phone</th>}
-                  {columns.service && <th className="px-2 py-2 bg-gray-100">Services</th>}
-                  {columns.scheduled && <th className="px-2 py-2 bg-gray-100">Scheduled</th>}
+                  {columns.createdOn && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Created On</th>
+                  )}
+                  {columns.payer && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Payer</th>
+                  )}
+                  {columns.status && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Status</th>
+                  )}
+                  {columns.email && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Email</th>
+                  )}
+                  {columns.payerPhone && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Payer Phone</th>
+                  )}
+                  {columns.service && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Services</th>
+                  )}
+                  {columns.scheduled && (
+                    <th className="px-2 py-2 bg-[#EBEEF0]">Scheduled</th>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-300 bg-white">
                 {currentDatas.length > 0 ? (
                   currentDatas.map((item) => (
-                    <tr key={item.id ?? item._id} className="transition-colors hover:bg-gray-50/80 text-xs">
+                    <tr
+                      key={item.id ?? item._id}
+                      className="transition-colors hover:bg-gray-50/80 text-xs"
+                    >
                       <td className="w-10 px-2 py-2">
-                        <input type="checkbox" style={{ accentColor: "#18181B" }} className="h-4 w-4 cursor-pointer" />
+                        <input
+                          type="checkbox"
+                          style={{ accentColor: "#18181B" }}
+                          className="h-4 w-4 cursor-pointer"
+                        />
                       </td>
-                      {columns.createdOn && <td className="whitespace-nowrap px-2 py-2 text-gray-600">{item.created_at}</td>}
-                      {columns.payer && <td className="whitespace-nowrap px-2 py-2 font-semibold text-gray-800">{item.payer}</td>}
+                      {columns.createdOn && (
+                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                          {item.created_at}
+                        </td>
+                      )}
+                      {columns.payer && (
+                        <td className="whitespace-nowrap px-2 py-2 font-semibold text-gray-800">
+                          {item.payer}
+                        </td>
+                      )}
                       {columns.status && (
                         <td className="whitespace-nowrap px-2 py-2">
                           <span
@@ -331,8 +425,8 @@ const WaitList = () => {
                               item.status === "Active"
                                 ? "bg-green-100 text-emerald-700"
                                 : item.status === "Lead"
-                                ? "bg-blue-100 text-blue-600"
-                                : "bg-slate-100 text-slate-600"
+                                  ? "bg-blue-100 text-blue-600"
+                                  : "bg-slate-100 text-slate-600"
                             }`}
                           >
                             <span
@@ -340,23 +434,42 @@ const WaitList = () => {
                                 item.status === "Active"
                                   ? "bg-emerald-500"
                                   : item.status === "Lead"
-                                  ? "bg-blue-500"
-                                  : "bg-slate-500"
+                                    ? "bg-blue-500"
+                                    : "bg-slate-500"
                               }`}
                             />
                             {item.status}
                           </span>
                         </td>
                       )}
-                      {columns.email && <td className="whitespace-nowrap px-2 py-2 text-gray-600">{item.email}</td>}
-                      {columns.payerPhone && <td className="whitespace-nowrap px-2 py-2 text-gray-600">{item.phone}</td>}
-                      {columns.service && <td className="whitespace-nowrap px-2 py-2 text-gray-600">{item.services}</td>}
-                      {columns.scheduled && <td className="whitespace-nowrap px-2 py-2 text-gray-600">{item.scheduled}</td>}
+                      {columns.email && (
+                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                          {item.email}
+                        </td>
+                      )}
+                      {columns.payerPhone && (
+                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                          {item.phone}
+                        </td>
+                      )}
+                      {columns.service && (
+                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                          {item.services}
+                        </td>
+                      )}
+                      {columns.scheduled && (
+                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                          {item.scheduled}
+                        </td>
+                      )}
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={visibleColumnCount} className="px-4 py-8 text-center text-gray-500">
+                    <td
+                      colSpan={visibleColumnCount}
+                      className="px-4 py-8 text-center text-gray-500"
+                    >
                       No waitlist data found.
                     </td>
                   </tr>
@@ -369,7 +482,8 @@ const WaitList = () => {
         {/* Pagination Controls */}
         <div className="flex items-center justify-between px-3 py-4 text-sm text-gray-600">
           <div>
-            Displaying {totalItems === 0 ? 0 : indexOfFirstItem + 1} - {Math.min(indexOfLastItem, totalItems)} out of {totalItems}
+            Displaying {totalItems === 0 ? 0 : indexOfFirstItem + 1} -{" "}
+            {Math.min(indexOfLastItem, totalItems)} out of {totalItems}
           </div>
 
           <div className="flex items-center gap-1">
@@ -388,7 +502,9 @@ const WaitList = () => {
                 key={page}
                 onClick={() => handlePageChange(page)}
                 className={`rounded-md border px-3 py-1 ${
-                  currentPage === page ? "border-blue-600 bg-blue-600 text-white" : "border-gray-300 hover:bg-gray-100"
+                  currentPage === page
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-gray-300 hover:bg-gray-100"
                 }`}
               >
                 {page}
