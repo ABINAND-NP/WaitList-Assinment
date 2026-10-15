@@ -360,11 +360,11 @@ const WaitList = () => {
       <div className="px-4">
         <div className="overflow-x-auto py-1">
           <div className="max-h-[420px] overflow-y-auto overflow-x-auto rounded-sm border border-[#E2E8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#E2E8F0]">
-            {" "}
-            <table className="w-full border-collapse text-left text-sm text-gray-700">
-              <thead className="sticky top-0 z-10 border-b border-gray-300 bg-gray-900 font-medium text-gray-600 text-xs">
+            
+            <table className="w-full border-collapse text-left font-medium ">
+              <thead className="sticky top-0 z-10 border-b border-gray-300 font-medium text-gray-600 text-xs ">
                 <tr>
-                  <th className="w-10 px-2 py-2 bg-[#EBEEF0]">
+                  <th className="w-10 px-2 py-3 pl-5  bg-[#F8FAFC]">
                     <input
                       type="checkbox"
                       style={{ accentColor: "#18181B" }}
@@ -372,54 +372,54 @@ const WaitList = () => {
                     />
                   </th>
                   {columns.createdOn && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Created On</th>
+                    <th className="px-2 py-3 bg-[#F8FAFC] text-[#64748B]font-medium font-medium pl-5 ">Created On</th>
                   )}
                   {columns.payer && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Payer</th>
+                    <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Payer</th>
                   )}
                   {columns.status && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Status</th>
+                    <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Status</th>
                   )}
                   {columns.email && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Email</th>
+                    <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Email</th>
                   )}
                   {columns.payerPhone && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Payer Phone</th>
+                    <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Payer Phone</th>
                   )}
                   {columns.service && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Services</th>
+                    <th className="px-2 py-3 pl-5 bg-[#F8FAFC] text-[#64748B] font-medium">Services</th>
                   )}
                   {columns.scheduled && (
-                    <th className="px-2 py-2 bg-[#EBEEF0]">Scheduled</th>
+                    <th className=" bg-[#F8FAFC] text-[#64748B] font-medium pl-5">Scheduled</th>
                   )}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-300 bg-white">
+              <tbody className="divide-y divide-[#E2E8F0] bg-white  ">
                 {currentDatas.length > 0 ? (
                   currentDatas.map((item) => (
                     <tr
                       key={item.id ?? item._id}
-                      className="transition-colors hover:bg-gray-50/80 text-xs"
+                      className="transition-colors hover:bg-gray-50/80 text-xs text-[#37415] font-medium"
                     >
-                      <td className="w-10 px-2 py-2">
+                      <td className="w-10 px-2 py-3 pl-5">
                         <input
                           type="checkbox"
                           style={{ accentColor: "#18181B" }}
-                          className="h-4 w-4 cursor-pointer"
+                          className="h-4 w-4 cursor-pointe rounded-full"
                         />
                       </td>
                       {columns.createdOn && (
-                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <td className="whitespace-nowrap px-2 py-3  pl-5  text-[#374151]">
                           {item.created_at}
                         </td>
-                      )}
+                      )} 
                       {columns.payer && (
-                        <td className="whitespace-nowrap px-2 py-2 font-semibold text-gray-800">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5  font-medium text-[#374151]">
                           {item.payer}
                         </td>
                       )}
-                      {columns.status && (
-                        <td className="whitespace-nowrap px-2 py-2">
+                      {columns.status && ( 
+                        <td className="whitespace-nowrap px-2 py-3 pl-5">
                           <span
                             className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${
                               item.status === "Active"
@@ -443,22 +443,22 @@ const WaitList = () => {
                         </td>
                       )}
                       {columns.email && (
-                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5 text-[#374151]">
                           {item.email}
                         </td>
                       )}
                       {columns.payerPhone && (
-                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5 text-[#374151]">
                           {item.phone}
                         </td>
                       )}
                       {columns.service && (
-                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5 text-[#374151]">
                           {item.services}
                         </td>
                       )}
                       {columns.scheduled && (
-                        <td className="whitespace-nowrap px-2 py-2 text-gray-600">
+                        <td className="whitespace-nowrap px-2 py-3 pl-5 text-[#374151]">
                           {item.scheduled}
                         </td>
                       )}
@@ -477,9 +477,7 @@ const WaitList = () => {
               </tbody>
             </table>
           </div>
-        </div>
-
-        {/* Pagination Controls */}
+           {/* Pagination Controls */}
         <div className="flex items-center justify-between px-3 py-4 text-sm text-gray-600">
           <div>
             Displaying {totalItems === 0 ? 0 : indexOfFirstItem + 1} -{" "}
@@ -521,6 +519,9 @@ const WaitList = () => {
             </button>
           </div>
         </div>
+        </div>
+
+       
       </div>
     </>
   );

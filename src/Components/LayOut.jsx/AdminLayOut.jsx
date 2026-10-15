@@ -15,4 +15,4 @@ const AdminLayOut = () => {
   );
 };
 
-export default AdminLayOut;
+export default AdminLayOut; 
