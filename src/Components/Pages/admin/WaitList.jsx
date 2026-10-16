@@ -11,6 +11,7 @@ import icon17 from "../../../assets/sideBarIcon/icon17.svg";
 import icon18 from "../../../assets/sideBarIcon/icon18.svg";
 import icon19 from "../../../assets/sideBarIcon/icon19.svg";
 import icon20 from "../../../assets/sideBarIcon/icon20.svg";
+import CustomCheckboxButton from "./CustomCheckboxButton.jsx";
 
 const WaitList = () => {
   const [datas, setData] = useState([]);
@@ -369,11 +370,7 @@ const WaitList = () => {
               <thead className="sticky top-0 z-10 border-b border-gray-300 font-medium text-gray-600 text-xs ">
                 <tr>
                   <th className="w-10 px-2 py-3 pl-5 bg-[#F8FAFC]">
-                    <input
-                      type="checkbox"
-                      style={{ accentColor: "#18181B" }}
-                      className="h-4 w-4 cursor-pointer"
-                    />
+                    <CustomCheckboxButton />                    
                   </th>
                   {columns.createdOn && (
                     <th className="px-2 py-3 bg-[#F8FAFC] text-[#64748B] font-medium pl-5">Created On</th>
@@ -406,11 +403,11 @@ const WaitList = () => {
                       className="transition-colors hover:bg-gray-50/80 text-xs text-[#37415] font-medium"
                     >
                       <td className="w-10 px-2 py-3 pl-5">
-                        <input
-                          type="checkbox"
-                          style={{ accentColor: "#18181B" }}
-                          className="h-4 w-4 cursor-pointer rounded-full"
-                        />
+                       
+
+                        <CustomCheckboxButton />
+
+                        
                       </td>
                       {columns.createdOn && (
                         <td className="whitespace-nowrap px-2 py-3 pl-5 text-[#374151]">

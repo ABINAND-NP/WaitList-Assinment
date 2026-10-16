@@ -83,14 +83,29 @@ const People = ({ selectedPeople, setSelectedPeople }) => {
                 className="flex items-center justify-between rounded-md px-2 py-1.5 text-xs hover:bg-gray-50 cursor-pointer"
               >
                 <div className="flex items-center gap-2.5">
-                  {/* Custom Checkbox: solid black background when checked, no tick mark */}
+                  {/* Integrated Custom Checkbox */}
                   <div
-                    className={`h-4 w-4 rounded border flex items-center justify-center transition-colors ${
-                      isChecked
-                        ? "bg-black border-black"
-                        : "bg-white border-gray-300"
+                    style={{
+                      backgroundColor: isChecked ? "#18181B" : "#FFFFFF",
+                    }}
+                    className={`h-[18px] w-[18px] rounded-[5px] border border-gray-300 flex items-center justify-center transition-colors shadow-sm flex-shrink-0 ${
+                      isChecked ? "border-[#18181B]" : "hover:border-gray-400"
                     }`}
-                  />
+                  >
+                    {isChecked && (
+                      <svg
+                        className="h-[10px] w-[10px] text-white"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    )}
+                  </div>
                   <span className="font-medium text-gray-800">{person.name}</span>
                 </div>
                 {person.tag && (
