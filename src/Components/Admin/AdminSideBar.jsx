@@ -68,7 +68,7 @@ const AdminSideBar = () => {
   return (
     <div
       className={`h-screen bg-[#F5F7FA] pt-4 pb-5 pl-2 pr-4 flex flex-col justify-between transition-all duration-300 ${
-        collapsed ? "w-20" : "w-65"
+        collapsed ? "w-20" : "w-228px"
       }`}
     >
       {/* Top Section */}
@@ -113,9 +113,11 @@ const AdminSideBar = () => {
           )}
         </div>
 
+        <div>
+
         {/* Location */}
         <div
-          className={`bg-white rounded-lg p-2 mb-2 flex items-center shadow-sm hover:shadow transition-all ${
+          className={`bg-white rounded-lg p-2 flex items-center shadow-sm hover:shadow transition-all ${
             collapsed ? "justify-center" : "justify-between"
           }`}
         >
@@ -129,7 +131,7 @@ const AdminSideBar = () => {
 
         {/* Date / Time */}
         {!collapsed && (
-          <div className="bg-[#EDF2F7] rounded-lg p-3 mb-6">
+          <div className="bg-[#EDF2F7] rounded-lg p-2 mb-4 w-[193px]">
             <div className="flex gap-2 text-[16px] text-[#334155]">
               <span className="font-bold">08:30 AM</span>
               <span>Tue 20 Jan</span>
@@ -143,6 +145,8 @@ const AdminSideBar = () => {
             </div>
           </div>
         )}
+
+        </div>
 
         {/* Menu Items */}
         <div className="space-y-1">
