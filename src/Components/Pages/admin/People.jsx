@@ -63,7 +63,7 @@ const People = ({ selectedPeople, setSelectedPeople }) => {
           placeholder="Start typing to search people..."
           value={peopleSearch}
           onChange={(e) => setPeopleSearch(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 bg-white py-1.5 pl-8 pr-3 text-xs text-gray-800 shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-900"
+          className="w-full rounded-lg border border-gray-300 bg-white py-1.5 pl-8 pr-3 text-xs text-gray-800 shadow-sm outline-none"
         />
       </div>
 
