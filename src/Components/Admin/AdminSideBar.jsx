@@ -16,6 +16,7 @@ import icon8 from '../../assets/sideBarIcon/icon8.svg';
 import icon9 from '../../assets/sideBarIcon/icon9.svg';
 import icon15 from "../../assets/sideBarIcon/icon15.svg";
 import icon21 from "../../assets/sideBarIcon/icon21.svg";
+import icon22 from "../../assets/sideBarIcon/icon22.svg";
 
 const AdminSideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -103,7 +104,7 @@ const AdminSideBar = () => {
               Location Name
             </span>
           )}
-          <ArrowLeftRight size={18} className="text-gray-500" />
+          <img src={icon22} alt="ic" className="h-16px w-16px" />
         </div>
 
         {/* Date / Time */}
