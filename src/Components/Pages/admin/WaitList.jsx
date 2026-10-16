@@ -175,14 +175,14 @@ const WaitList = () => {
 
   return (
     <>
-      <div className="px-4 py-1">
+      <div className="px-4 py-1" >
         <strong className="text-[#334155] text-[20px] font-semibold leading-[28px]">
           WaitList
         </strong>
       </div>
 
       <div>
-        <div className="flex gap-3 px-4 py-3 ">
+        <div className="flex gap-3 px-4 py-3">
           <StatusCard title="All Waitlists" value={totalItems} />
           <StatusCard title="Newly Add" value="50" />
           <StatusCard title="Leads" value="20" />
@@ -225,146 +225,158 @@ const WaitList = () => {
             </div>
 
             <button
-              type="button"
-              onClick={handleRefresh}
-              title="Clear search"
-              className="px-1 py-1 hover:text-blue-600"
-            >
-              <img src={icon12} alt="ic" className="h-16px w-16px" />
-            </button>
+  type="button"
+  onClick={handleRefresh}
+  title="Clear search"
+  className="px-1 py-1 hover:text-blue-600 group"
+>
+  <img 
+    src={icon12} 
+    alt="ic" 
+    className="h-16px w-16px transition-transform duration-300 group-hover:rotate-180" 
+  />
+</button>
 
-            <div className="relative">
-              <button
-                type="button"
-                title="Columns"
-                onClick={() => {
-                  setTempColumns({ ...columns });
-                  setShowColumnModal((prev) => !prev);
-                }}
-                className="px-1 hover:text-blue-600 flex items-center"
-              >
-                <img src={icon13} alt="ic" className="h-16px w-16px" />
-              </button>
+<div className="relative">
+  <button
+    type="button"
+    title="Columns"
+    onClick={() => {
+      setTempColumns({ ...columns });
+      setShowColumnModal((prev) => !prev);
+    }}
+    className="px-1 hover:text-blue-600 flex items-center group"
+  >
+    <img 
+      src={icon13} 
+      alt="ic" 
+      className="h-16px w-16px transition-transform duration-200 group-hover:-translate-y-0.5" 
+    />
+  </button>
 
-              {showColumnModal && (
-                <div className="absolute right-0 top-full mt-2 w-80 rounded-lg bg-white p-4 shadow-xl border border-gray-200 z-50">
-                  <h3 className="text-base font-semibold text-gray-900">
-                    Edit Columns
-                  </h3>
-                  <p className="mt-1 text-xs text-gray-500">
-                    Select the columns to display
-                  </p>
+  {showColumnModal && (
+    <div className="absolute right-0 top-full mt-2 w-80 rounded-lg bg-white p-4 shadow-xl border border-gray-200 z-50">
+      <h3 className="text-base font-semibold text-gray-900">
+        Edit Columns
+      </h3>
+      <p className="mt-1 text-xs text-gray-500">
+        Select the columns to display
+      </p>
 
-                  <div className="mt-4 max-h-[260px] overflow-y-auto space-y-2.5 pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300">
-                    {[
-                      { key: "createdOn", label: "Order Created On" },
-                      { key: "payer", label: "Payer" },
-                      { key: "status", label: "Status" },
-                      { key: "email", label: "Email" },
-                      { key: "payerPhone", label: "Payer Phone" },
-                      { key: "service", label: "Service" },
-                      { key: "scheduled", label: "Scheduled" },
-                    ].map((col) => (
-                      <div key={col.key} className="flex items-center gap-3">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setTempColumns({
-                              ...tempColumns,
-                              [col.key]: !tempColumns[col.key],
-                            })
-                          }
-                          className={`h-4 w-4 rounded flex items-center justify-center transition-colors cursor-pointer shadow-sm flex-shrink-0 ${
-                            tempColumns[col.key]
-                              ? "bg-[#18181B] text-white"
-                              : "bg-white border border-gray-300 hover:border-gray-400"
-                          }`}
-                        >
-                          {tempColumns[col.key] && (
-                            <svg
-                              className="h-3 w-3"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={3}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-                        </button>
-                        <div
-                          onClick={() =>
-                            setTempColumns({
-                              ...tempColumns,
-                              [col.key]: !tempColumns[col.key],
-                            })
-                          }
-                          className="flex-1 rounded-lg border border-gray-200 px-3 py-2.5 bg-white cursor-pointer hover:bg-gray-50 transition-colors"
-                        >
-                          <span className="text-xs font-medium text-gray-700">
-                            {col.label}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 flex items-center gap-2 pt-2 border-t border-gray-100">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const defaultCols = {
-                          createdOn: true,
-                          payer: true,
-                          status: true,
-                          email: true,
-                          payerPhone: true,
-                          service: true,
-                          scheduled: true,
-                        };
-                        setTempColumns(defaultCols);
-                        setColumns(defaultCols);
-                        setShowColumnModal(false);
-                      }}
-                      className="w-1/2 rounded-md border border-gray-300 bg-white py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 shadow-sm"
-                    >
-                      Reset to Default
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setColumns({ ...tempColumns });
-                        setShowColumnModal(false);
-                      }}
-                      style={{ backgroundColor: "#0F172A" }}
-                      className="w-1/2 rounded-md py-2 text-xs font-medium text-white hover:opacity-90 shadow-sm"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
+      <div className="mt-4 max-h-[260px] overflow-y-auto space-y-2.5 pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-300">
+        {[
+          { key: "createdOn", label: "Order Created On" },
+          { key: "payer", label: "Payer" },
+          { key: "status", label: "Status" },
+          { key: "email", label: "Email" },
+          { key: "payerPhone", label: "Payer Phone" },
+          { key: "service", label: "Service" },
+          { key: "scheduled", label: "Scheduled" },
+        ].map((col) => (
+          <div key={col.key} className="flex items-center gap-3">
             <button
               type="button"
-              title="Download"
-              className="px-1 hover:text-blue-600 flex items-center"
+              onClick={() =>
+                setTempColumns({
+                  ...tempColumns,
+                  [col.key]: !tempColumns[col.key],
+                })
+              }
+              className={`h-4 w-4 rounded flex items-center justify-center transition-colors cursor-pointer shadow-sm flex-shrink-0 ${
+                tempColumns[col.key]
+                  ? "bg-[#18181B] text-white"
+                  : "bg-white border border-gray-300 hover:border-gray-400"
+              }`}
             >
-              <img src={icon14} alt="ic" className="h-16px w-16px" />
+              {tempColumns[col.key] && (
+                <svg
+                  className="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={3}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              )}
             </button>
+            <div
+              onClick={() =>
+                setTempColumns({
+                  ...tempColumns,
+                  [col.key]: !tempColumns[col.key],
+                })
+              }
+              className="flex-1 rounded-lg border border-gray-200 px-3 py-2.5 bg-white cursor-pointer hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-xs font-medium text-gray-700">
+                {col.label}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center gap-2 pt-2 border-t border-gray-100">
+        <button
+          type="button"
+          onClick={() => {
+            const defaultCols = {
+              createdOn: true,
+              payer: true,
+              status: true,
+              email: true,
+              payerPhone: true,
+              service: true,
+              scheduled: true,
+            };
+            setTempColumns(defaultCols);
+            setColumns(defaultCols);
+            setShowColumnModal(false);
+          }}
+          className="w-1/2 rounded-md border border-gray-300 bg-white py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 shadow-sm"
+        >
+          Reset to Default
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setColumns({ ...tempColumns });
+            setShowColumnModal(false);
+          }}
+          style={{ backgroundColor: "#0F172A" }}
+          className="w-1/2 rounded-md py-2 text-xs font-medium text-white hover:opacity-90 shadow-sm"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+  )}
+</div>
+
+<button
+  type="button"
+  title="Download"
+  className="px-1 hover:text-blue-600 flex items-center group"
+>
+  <img 
+    src={icon14} 
+    alt="ic" 
+    className="h-16px w-16px transition-transform duration-200 group-hover:translate-y-0.5" 
+  />
+</button>
           </div>
         </div>
       </div>
 
-      <div className="px-4">
+      <div className="px-4 pt-3">
         <div className="overflow-x-auto py-1">
           {/* Adjusted max-h to display ~7 items at a time */}
-          <div className="max-h-[350px] overflow-y-auto overflow-x-auto rounded-sm border border-[#E2E8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#E2E8F0]">
+          <div className="max-h-[319px]  overflow-y-auto overflow-x-auto rounded-sm border border-[#E2E8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#E2E8F0] [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#E2E8F0]">
             
             <table className="w-full border-collapse text-left font-medium ">
               <thead className="sticky top-0 z-10 border-b border-gray-300 font-medium text-gray-600 text-xs ">
@@ -480,7 +492,7 @@ const WaitList = () => {
           </div>
 
           {/* Pagination Controls */}
-          <div className="flex items-center justify-between px-3 py-4 text-sm text-gray-600">
+          <div className="flex items-center justify-between px-3 pb-1 pt-5 text-sm text-gray-600">
             <div className="flex gap-1">
               Displaying {" "} <button className="flex bg-[#F8FAFC] text-[#334155] px-2 py-1 rounded-sm ">{Math.min(indexOfLastItem, totalItems)} <img src={icon18} alt="ic" className="h-16px w-16px" /> </button>  out of <label className="text-[#18181B]">{totalItems}</label>
             </div>
